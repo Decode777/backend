@@ -21,6 +21,24 @@ pipeline {
                 '''
             }
         }
+stage('Lint') {
+    steps {
+        // Run linting to ensure code quality
+        bat '''
+            set PATH=%NODEJS_HOME%;%PATH%
+            npm run lint
+        '''
+    }
+}
+          stage('Build') {
+            steps {
+                // Build the React app
+                bat '''
+                set PATH=%NODEJS_HOME%;%PATH%
+                npm run build
+                '''
+            }
+        }
         stage('SonarQube Analysis') {
             environment {
                 SONAR_TOKEN = credentials('sonar-token') // Accessing the SonarQube token stored in Jenkins
