@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        nodejs 'nodejs' // Replace with your configured Node.js name 
+        nodejs 'nodejs' // Replace with your configured Node.js name
     }
     environment {
         NODEJS_HOME = 'C:/Program Files/nodejs'
@@ -13,28 +13,27 @@ pipeline {
                 checkout scm
             }
         }
-    stage('Install Dependencies') {
-    steps {
-        // Set the PATH and install dependencies using npm
-        bat '''
-            set PATH=%NODEJS_HOME%;%PATH%
-            npm install
-        '''
-    }
-}
-            stage('SonarQube Analysis') {
+        stage('Install Dependencies') {
+            steps {
+                bat '''
+                    set PATH=%NODEJS_HOME%;%PATH%
+                    npm install
+                '''
+            }
+        }
+        stage('SonarQube Analysis') {
             environment {
-                SONAR_TOKEN = credentials('sonar-token') // Accessing the SonarQube token stored in Jenkins 
+                SONAR_TOKEN = credentials('sonar-token') // Accessing the SonarQube token stored in Jenkins
             }
             steps {
-                // Ensure that sonar-scanner is in the PATH
                 bat '''
-                set PATH=%SONAR_SCANNER_PATH%;%PATH%
-                where sonar-scanner || echo "SonarQube scanner not found. Please install it."
-                sonar-scanner -Dsonar.projectKey=backend ^
-                    -Dsonar.sources=. ^
-                    -Dsonar.host.url=http://localhost:9000 ^
-                    -Dsonar.token=sqp_502d6744cad8059bc34200924fe2f9c4d1d2e731
+                    set PATH=%SONAR_SCANNER_PATH%;%PATH%
+                    echo "Debug: Verifying SonarQube Scanner Path"
+                    where sonar-scanner || echo "SonarQube scanner not found. Please check installation."
+                    sonar-scanner -Dsonar.projectKey=backend ^
+                        -Dsonar.sources=. ^
+                        -Dsonar.host.url=http://localhost:9000 ^
+                        -Dsonar.token=%SONAR_TOKEN%
                 '''
             }
         }
