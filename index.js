@@ -29,7 +29,7 @@ mongoose.connect(MONGO_URI)
         try{
             const {name,email,password}=req.body;
             console.log(name+""+email+" "+password)
-            const existingUser=await userModel.findOne({email});
+            const existingUser=await UserModel.findOne({email});
             console.log(existingUser);
             if(existingUser){
                 return res.status(400).json({error:"Email already exist"});
