@@ -46,12 +46,12 @@ stage('Lint') {
             steps {
                 bat '''
                     set PATH=%SONAR_SCANNER_PATH%;%PATH%
-                    echo "Debug: Verifying SonarQube Scanner Path"
-                    where sonar-scanner || echo "SonarQube scanner not found. Please check installation."
-                    sonar-scanner -Dsonar.projectKey=backend ^
-                        -Dsonar.sources=. ^
-                        -Dsonar.host.url=http://localhost:9000 ^
-                        -Dsonar.token=%SONAR_TOKEN%
+                    where sonar-scanner || echo "SonarQube scanner not found. Please install it."
+                    sonar-scanner.bat ^
+                    -Dsonar.projectKey=backend ^
+                    -Dsonar.sources=. ^
+                    -Dsonar.host.url=http://localhost:9000 ^
+                    -Dsonar.login=%SONAR_TOKEN%
                 '''
             }
         }
