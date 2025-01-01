@@ -1,21 +1,23 @@
 export default [
   {
-      env: {
-          browser: true,
-          node: true,
-          es2021: true,
-      },
-      extends: [
-          'eslint:recommended',
-          'plugin:react/recommended',
-      ],
-      parserOptions: {
-          ecmaVersion: 12,
+      files: ['**/*.js'], // Apply this config to all `.js` files
+      languageOptions: {
+          ecmaVersion: 2021, // Use ES2021 syntax
           sourceType: 'module',
+          globals: {
+              browser: true,
+              node: true,
+              require: 'readonly',
+              process: 'readonly',
+              module: 'readonly',
+          },
       },
-      plugins: ['react'],
+      plugins: {
+          react: require('eslint-plugin-react'),
+      },
       rules: {
-          'no-undef': 'off', // Disable 'no-undef' for Node.js globals
+          'react/react-in-jsx-scope': 'off', // Example: Rule for React projects
+          'no-undef': 'off', // Disable `no-undef` for Node.js globals
       },
       settings: {
           react: {
