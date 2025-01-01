@@ -59,8 +59,8 @@ pipeline {
                 sonar-scanner.bat ^
                 -Dsonar.projectKey=backend ^
                 -Dsonar.sources=. ^
-                -Dsonar.host.url=http://localhost:9000 ^
-                -Dsonar.login=%SONAR_TOKEN% 
+                -Dsonar.host.url=http://localhost:9000 ^ 
+                -Dsonar.token=sqp_b0d2f438932ba9b676563e95b2375642d18e2095
                 '''
             }
         }
